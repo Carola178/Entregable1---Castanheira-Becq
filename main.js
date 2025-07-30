@@ -1,39 +1,157 @@
+alert("¿Qué tan saludable sos? ¡Descubrilo respondiendo esta encuesta!");
 
+// Listas por categoría
+let personasSanas = [];
+let personasMedias = [];
+let personasNoSanas = [];
 
+//for (let i = 0; i < 5; i++) {
+let nombreUsuario = prompt("¿Cuál es tu nombre?");
 
-ejerciciosSemana = prompt("¿Cuàntos dias a la semana sueles hacer ejercicio?")
+if (
+  nombreUsuario === null ||
+  nombreUsuario.trim() === "" ||
+  !/^[a-zA-Z\s]+$/.test(nombreUsuario)
+) {
+  console.log("Encuesta finalizada o nombre inválido.");
+  //break;
+}
 
-alert("La cantidad de dias que haces ejercicios son: " + ejerciciosSemana)
+console.log("Bienvenido/a " + nombreUsuario);
+let puntajeSalud = 0;
 
-//agregar condicion con if, si es menos q 3 no es saludable + mensaje
-//si quiere ingresar un dato q no sea numero ERROR
+let edadUsuario = prompt("¿Qué edad tenés?");
+edadUsuario = Number(edadUsuario);
 
+if (!isNaN(edadUsuario) && edadUsuario >= 18) {
+  console.log(nombreUsuario + " es mayor de 18 años");
+} else if (edadUsuario < 18) {
+  console.log(nombreUsuario + " es menor a 18 años");
+} else {
+  console.log("Edad inválida. Se continúa de todas formas.");
+}
 
-horasSuenio = prompt("¿Cuántas horas dormís por noche en promedio?")
+let ejerciciosSemana = prompt("¿Cuántos días a la semana hacés ejercicio?");
+ejerciciosSemana = Number(ejerciciosSemana);
+if (!isNaN(ejerciciosSemana) && ejerciciosSemana < 3) {
+  console.log(nombreUsuario + " no hace suficiente ejercicio.");
+  puntajeSalud -= 2;
+} else if (!isNaN(ejerciciosSemana)) {
+  console.log(nombreUsuario + " hace ejercicio suficiente.");
+  puntajeSalud += 2;
+}
 
-alert("El promedio de horas dormidas son: " + horasSuenio)
+let horasSuenio = prompt("¿Cuántas horas dormís por noche?");
+horasSuenio = Number(horasSuenio);
+if (!isNaN(horasSuenio) && horasSuenio < 8) {
+  console.log(nombreUsuario + " no duerme lo suficiente.");
+  puntajeSalud -= 2;
+} else if (!isNaN(horasSuenio)) {
+  console.log(nombreUsuario + " duerme lo necesario.");
+  puntajeSalud += 2;
+}
 
-//agregar condicion con if, si es menos q 8 no es saludable + mensaje
-//si quiere ingresar un dato q no sea numero ERROR
+let tomarAgua = prompt("¿Cuántos litros de agua tomás por día?");
+tomarAgua = Number(tomarAgua);
+if (!isNaN(tomarAgua) && tomarAgua < 2) {
+  console.log(nombreUsuario + " no toma suficiente agua.");
+  puntajeSalud -= 2;
+} else if (!isNaN(tomarAgua)) {
+  console.log(nombreUsuario + " toma suficiente agua.");
+  puntajeSalud += 2;
+}
 
-tomarAgua = prompt("¿Cuantos litros de agua sueles tomar por dìa?")
+let usoDispositivos = prompt("¿Cuántas horas por día usás pantallas?");
+usoDispositivos = Number(usoDispositivos);
+if (!isNaN(usoDispositivos) && usoDispositivos > 3) {
+  console.log(nombreUsuario + " usa demasiado tiempo pantallas.");
+  puntajeSalud -= 2;
+} else if (!isNaN(usoDispositivos)) {
+  console.log(nombreUsuario + " tiene buen control del uso de pantallas.");
+  puntajeSalud += 2;
+}
 
-alert("La cantidad de litros de agua son: " + tomarAgua)
+let fumadores = prompt("¿Fumás cigarrillos o vapeás regularmente? (Si/No)");
+if (fumadores && fumadores.toLowerCase() === "si") {
+  console.log(nombreUsuario + " fuma o vapea.");
+  puntajeSalud -= 2;
+} else if (fumadores && fumadores.toLowerCase() === "no") {
+  console.log(nombreUsuario + " no fuma ni vapea.");
+  puntajeSalud += 2;
+}
 
+let tomarAlcohol = prompt("¿Tomás alcohol más de 2 veces por semana? (Si/No)");
+if (tomarAlcohol && tomarAlcohol.toLowerCase().trim() === "si") {
+  console.log(nombreUsuario + " toma alcohol con frecuencia.");
+  puntajeSalud -= 2;
+} else if (tomarAlcohol && tomarAlcohol.toLowerCase().trim() === "no") {
+  console.log(nombreUsuario + " no toma alcohol frecuentemente.");
+  puntajeSalud += 2;
+}
 
-usoDispositivos = prompt("¿Cuántas horas por día pasás frente a una pantalla (celular, compu, etc.)?")
+let consumoFrutas = prompt(
+  "¿Cuántas porciones de frutas/verduras comés por día?"
+);
+consumoFrutas = Number(consumoFrutas);
+if (!isNaN(consumoFrutas) && consumoFrutas < 2) {
+  console.log(nombreUsuario + " no consume suficientes frutas y verduras.");
+  puntajeSalud -= 2;
+} else if (!isNaN(consumoFrutas)) {
+  console.log(nombreUsuario + " consume suficientes frutas y verduras.");
+  puntajeSalud += 2;
+}
 
-alert("La cantidad de horas de uso del celular son: " + usoDispositivos)
+alert("Muchas gracias por responder esta encuesta, " + nombreUsuario);
 
+// Clasificación final según puntaje
+if (puntajeSalud >= 8) {
+  console.log("¡Estás en muy buen estado de salud! Seguí así.");
+  personasSanas.push(nombreUsuario);
+} else if (puntajeSalud >= 4) {
+  console.log("Vas bien, pero podés mejorar tus hábitos.");
+  personasMedias.push(nombreUsuario);
+} else {
+  console.log("Deberías prestar más atención a tus hábitos.");
+  personasNoSanas.push(nombreUsuario);
+}
+//}
 
-fumadores = prompt("¿Fumás cigarrillos o vapeás regularmente?")
+// Mostrar resumen total al final
+console.log("----- RESULTADO FINAL DE LA ENCUESTA -----");
+console.log(
+  "Personas sanas (" + personasSanas.length + "): " + personasSanas.join(", ")
+);
+console.log(
+  "Personas medio sanas (" +
+    personasMedias.length +
+    "): " +
+    personasMedias.join(", ")
+);
+console.log(
+  "Personas no sanas (" +
+    personasNoSanas.length +
+    "): " +
+    personasNoSanas.join(", ")
+);
 
+let total =
+  personasSanas.length + personasMedias.length + personasNoSanas.length;
 
-
-tomarAlcohol = prompt("¿Tomás bebidas alcohólicas más de 2 veces por semana?")
-
-
-
-consumoFrutas = prompt("¿Cuántas porciones de frutas y verduras consumís por día?")
-
-alert("La cantidad de frutas y verduras consumidas son: " + consumoFrutas)
+if (total > 0) {
+  console.log("----- PORCENTAJES -----");
+  console.log(
+    "Personas sanas: " + ((personasSanas.length / total) * 100).toFixed(2) + "%"
+  );
+  console.log(
+    "Personas medio sanas: " +
+      ((personasMedias.length / total) * 100).toFixed(2) +
+      "%"
+  );
+  console.log(
+    "Personas no sanas: " +
+      ((personasNoSanas.length / total) * 100).toFixed(2) +
+      "%"
+  );
+} else {
+  console.log("No se ingresaron datos para calcular porcentajes.");
+}
